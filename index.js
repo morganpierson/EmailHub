@@ -1,21 +1,17 @@
 const express = require("express");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const mongoose = require("mongoose");
+
 const keys = require("./config/keys");
+const authRoutes = require("./routes/authRoutes");
+
+require("./models/user");
+require("./services/passport");
+
+mongoose.connect(keys.mongoURI);
+
 const app = express();
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback"
-    },
-    accessToken => {
-      console.log(accessToken);
-    }
-  )
-);
+authRoutes(app);
 
 const PORT = process.env.PORT || 3000; //process.env.PORT represents an environment variable to later be determined by Heroku, otherwise use 3000 while in development
 app.listen(PORT, () => {
