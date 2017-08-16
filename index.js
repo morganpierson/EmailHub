@@ -25,5 +25,5 @@ app.use(passport.session());
 
 authRoutes(app);
 
-const PORT = process.env.PORT || 8080; //process.env.PORT represents an environment variable to later be determined by Heroku, otherwise use 3000 while in development
+let PORT = process.env.PORT || 8080; //process.env.PORT represents an environment variable to later be determined by Heroku, otherwise use 3000 while in development
 app.listen(PORT);
